@@ -1,5 +1,5 @@
 import { SORT_ORDER } from '../constants/index.js';
-import Contact from '../models/contacts.js';
+import Contact from '../db/models/contacts.js';
 import { calculatePaginationData } from '../utils/calculatePaginationData.js';
 
 export const getAllContacts = async ({
@@ -10,7 +10,7 @@ export const getAllContacts = async ({
   filter = {},
 }) => {
   const limit = perPage;
-  const skip = (page - 1) * perPage;
+  const skip = page > 0 ? (page - 1) * perPage : 0;
 
   const contactsQuery = Contact.find();
 
