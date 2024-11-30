@@ -1,5 +1,5 @@
 import { SORT_ORDER } from '../constants/index.js';
-import Contact from '../db/models/contacts.js';
+import { ContactsCollection } from '../db/models/contacts.js';
 import { calculatePaginationData } from '../utils/calculatePaginationData.js';
 
 export const getAllContacts = async ({
@@ -12,7 +12,7 @@ export const getAllContacts = async ({
   const limit = perPage;
   const skip = page > 0 ? (page - 1) * perPage : 0;
 
-  const contactsQuery = Contact.find();
+  const contactsQuery = ContactsCollection.find();
 
   if (filter.type) {
     contactsQuery.where('contactType').equals(filter.type);
@@ -23,7 +23,7 @@ export const getAllContacts = async ({
   }
 
   const [contactsCount, contacts] = await Promise.all([
-    Contact.find().merge(contactsQuery).countDocuments(),
+    ContactsCollection.find().merge(contactsQuery).countDocuments(),
     contactsQuery
       .skip(skip)
       .limit(limit)
@@ -40,20 +40,24 @@ export const getAllContacts = async ({
 };
 
 export const getContactById = async (contactId) => {
-  const contact = await Contact.findById(contactId);
+  const contact = await ContactsCollection.findById(contactId);
   return contact;
 };
 
 export const createContact = async (payload) => {
-  const contact = await Contact.create(payload);
+  const contact = await ContactsCollection.create(payload);
   return contact;
 };
 
 export const updateContact = async (contactId, payload) => {
-  const rawResult = await Contact.findByIdAndUpdate(contactId, payload, {
-    new: true,
-    includeResultMetadata: true,
-  });
+  const rawResult = await ContactsCollection.findByIdAndUpdate(
+    contactId,
+    payload,
+    {
+      new: true,
+      includeResultMetadata: true,
+    },
+  );
 
   if (!rawResult || !rawResult.value) return null;
 
@@ -64,6 +68,6 @@ export const updateContact = async (contactId, payload) => {
 };
 
 export const deleteContact = async (contactId) => {
-  const contact = await Contact.findByIdAndDelete(contactId);
+  const contact = await ContactsCollection.findByIdAndDelete(contactId);
   return contact;
 };
