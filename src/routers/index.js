@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import contactsRouter from './students.js';
+import contactsRouter from './contacts.js';
 import authRouter from './auth.js';
 
 const router = Router();

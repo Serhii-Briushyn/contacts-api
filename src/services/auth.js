@@ -73,5 +73,9 @@ export const refreshUsersSession = async ({ sessionId, refreshToken }) => {
 };
 
 export const logoutUser = async (sessionId) => {
+  if (!sessionId) {
+    throw createHttpError(400, 'Session ID is required');
+  }
+
   await SessionsCollection.deleteOne({ _id: sessionId });
 };

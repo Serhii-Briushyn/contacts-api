@@ -1,9 +1,9 @@
 import { THIRTY_DAYS } from '../constants/index.js';
-import { UsersCollection } from '../db/models/user.js';
 import {
   loginUser,
   logoutUser,
   refreshUsersSession,
+  registerUser,
 } from '../services/auth.js';
 
 const setupSession = (res, session) => {
@@ -18,7 +18,7 @@ const setupSession = (res, session) => {
 };
 
 export const registerUserController = async (req, res) => {
-  const user = UsersCollection(req.body);
+  const user = await registerUser(req.body);
 
   res.status(201).json({
     status: 201,
@@ -59,9 +59,7 @@ export const refreshUserSessionController = async (req, res) => {
 };
 
 export const logoutUserController = async (req, res) => {
-  if (req.cookies.sessionId) {
-    await logoutUser(req.cookies.sessionId);
-  }
+  await logoutUser(req.cookies.sessionId);
 
   res.clearCookie('sessionId');
   res.clearCookie('refreshToken');
