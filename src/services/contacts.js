@@ -3,6 +3,7 @@ import { ContactsCollection } from '../db/models/contacts.js';
 import { calculatePaginationData } from '../utils/calculatePaginationData.js';
 
 export const getAllContacts = async ({
+  userId,
   page,
   perPage,
   sortOrder = SORT_ORDER.ASC,
@@ -12,7 +13,7 @@ export const getAllContacts = async ({
   const limit = perPage;
   const skip = page > 0 ? (page - 1) * perPage : 0;
 
-  const contactsQuery = ContactsCollection.find();
+  const contactsQuery = ContactsCollection.find({ userId });
 
   if (filter.type) {
     contactsQuery.where('contactType').equals(filter.type);
@@ -23,7 +24,7 @@ export const getAllContacts = async ({
   }
 
   const [contactsCount, contacts] = await Promise.all([
-    ContactsCollection.find().merge(contactsQuery).countDocuments(),
+    ContactsCollection.find({ userId }).merge(contactsQuery).countDocuments(),
     contactsQuery
       .skip(skip)
       .limit(limit)
@@ -44,8 +45,8 @@ export const getContactById = async (contactId) => {
   return contact;
 };
 
-export const createContact = async (payload) => {
-  const contact = await ContactsCollection.create(payload);
+export const createContact = async (payload, userId) => {
+  const contact = await ContactsCollection.create({ ...payload, userId });
   return contact;
 };
 
