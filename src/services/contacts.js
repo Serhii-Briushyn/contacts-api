@@ -2,7 +2,9 @@ import { SORT_ORDER } from '../constants/index.js';
 import { ContactsCollection } from '../db/models/contacts.js';
 import { calculatePaginationData } from '../utils/calculatePaginationData.js';
 
-export const getAllContacts = async ({
+//--------------------getAllContactsService--------------------
+
+export const getAllContactsService = async ({
   userId,
   page,
   perPage,
@@ -40,12 +42,16 @@ export const getAllContacts = async ({
   };
 };
 
-export const getContactById = async (contactId, userId) => {
+//--------------------getContactByIdService--------------------
+
+export const getContactByIdService = async (contactId, userId) => {
   const contact = await ContactsCollection.findOne({ _id: contactId, userId });
   return contact;
 };
 
-export const createContact = async (contactData, userId) => {
+//--------------------createContactService--------------------
+
+export const createContactService = async (contactData, userId) => {
   const newContact = await ContactsCollection.create({
     ...contactData,
     userId,
@@ -53,7 +59,9 @@ export const createContact = async (contactData, userId) => {
   return newContact;
 };
 
-export const updateContact = async (contactId, contactData, userId) => {
+//--------------------updateContactService--------------------
+
+export const updateContactService = async (contactId, contactData, userId) => {
   const updatedContact = await ContactsCollection.findOneAndUpdate(
     { _id: contactId, userId },
     contactData,
@@ -63,7 +71,9 @@ export const updateContact = async (contactId, contactData, userId) => {
   return updatedContact;
 };
 
-export const deleteContact = async (contactId, userId) => {
+//--------------------deleteContactService--------------------
+
+export const deleteContactService = async (contactId, userId) => {
   const deletedContact = await ContactsCollection.findOneAndDelete({
     _id: contactId,
     userId,

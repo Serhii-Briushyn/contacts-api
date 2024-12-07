@@ -1,9 +1,11 @@
 import { THIRTY_DAYS } from '../constants/index.js';
 import {
-  loginUser,
-  logoutUser,
-  refreshUsersSession,
-  registerUser,
+  loginUserService,
+  logoutUserService,
+  refreshUsersSessionService,
+  registerUserService,
+  resetPasswordService,
+  sendResetPasswordEmailService,
 } from '../services/auth.js';
 
 const setupSession = (res, session) => {
@@ -17,8 +19,10 @@ const setupSession = (res, session) => {
   });
 };
 
+//--------------------registerUserController--------------------
+
 export const registerUserController = async (req, res) => {
-  const user = await registerUser(req.body);
+  const user = await registerUserService(req.body);
 
   res.status(201).json({
     status: 201,
@@ -27,8 +31,10 @@ export const registerUserController = async (req, res) => {
   });
 };
 
+//--------------------loginUserController--------------------
+
 export const loginUserController = async (req, res) => {
-  const session = await loginUser(req.body);
+  const session = await loginUserService(req.body);
 
   setupSession(res, session);
 
@@ -41,8 +47,10 @@ export const loginUserController = async (req, res) => {
   });
 };
 
+//--------------------refreshUserSessionController--------------------
+
 export const refreshUserSessionController = async (req, res) => {
-  const session = await refreshUsersSession({
+  const session = await refreshUsersSessionService({
     sessionId: req.cookies.sessionId,
     refreshToken: req.cookies.refreshToken,
   });
@@ -58,11 +66,37 @@ export const refreshUserSessionController = async (req, res) => {
   });
 };
 
+//--------------------logoutUserController--------------------
+
 export const logoutUserController = async (req, res) => {
-  await logoutUser(req.cookies.sessionId);
+  await logoutUserService(req.cookies.sessionId);
 
   res.clearCookie('sessionId');
   res.clearCookie('refreshToken');
 
   res.status(204).send();
+};
+
+//--------------------sendResetPasswordEmailController--------------------
+
+export const sendResetPasswordEmailController = async (req, res) => {
+  await sendResetPasswordEmailService(req.body.email);
+
+  res.json({
+    message: 'Reset password email was successfully sent!',
+    status: 200,
+    data: {},
+  });
+};
+
+//--------------------resetPasswordController--------------------
+
+export const resetPasswordController = async (req, res) => {
+  await resetPasswordService(req.body);
+
+  res.json({
+    message: 'Password was successfully reset!',
+    status: 200,
+    data: {},
+  });
 };
