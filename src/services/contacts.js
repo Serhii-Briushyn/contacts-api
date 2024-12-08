@@ -51,9 +51,9 @@ export const getContactByIdService = async (contactId, userId) => {
 
 //--------------------createContactService--------------------
 
-export const createContactService = async (contactData, userId) => {
+export const createContactService = async (userId, newContactData) => {
   const newContact = await ContactsCollection.create({
-    ...contactData,
+    ...newContactData,
     userId,
   });
   return newContact;
@@ -61,7 +61,7 @@ export const createContactService = async (contactData, userId) => {
 
 //--------------------updateContactService--------------------
 
-export const updateContactService = async (contactId, contactData, userId) => {
+export const updateContactService = async (contactId, userId, contactData) => {
   const updatedContact = await ContactsCollection.findOneAndUpdate(
     { _id: contactId, userId },
     contactData,

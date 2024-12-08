@@ -31,14 +31,14 @@ const createSession = (userId) => {
 
 //--------------------registerUserService--------------------
 
-export const registerUserService = async (userData) => {
-  const user = await UsersCollection.findOne({ email: userData.email });
+export const registerUserService = async (newUserData) => {
+  const user = await UsersCollection.findOne({ email: newUserData.email });
   if (user) throw createHttpError(409, 'Email in use');
 
-  const encryptedPassword = await bcrypt.hash(userData.password, 10);
+  const encryptedPassword = await bcrypt.hash(newUserData.password, 10);
 
   return await UsersCollection.create({
-    ...userData,
+    ...newUserData,
     password: encryptedPassword,
   });
 };
@@ -154,13 +154,13 @@ export const sendResetPasswordEmailService = async (email) => {
 
 //--------------------resetPasswordService--------------------
 
-export const resetPasswordService = async (payload) => {
+export const resetPasswordService = async (resetData) => {
   let entries;
 
   try {
-    entries = jwt.verify(payload.token, env('JWT_SECRET'));
+    entries = jwt.verify(resetData.token, env('JWT_SECRET'));
   } catch (err) {
-    if (err instanceof Error) {
+    if (err) {
       throw createHttpError(401, 'Token is invalid or expired.');
     }
     throw err;
@@ -175,7 +175,7 @@ export const resetPasswordService = async (payload) => {
     throw createHttpError(404, 'User not found');
   }
 
-  const encryptedPassword = await bcrypt.hash(payload.password, 10);
+  const encryptedPassword = await bcrypt.hash(resetData.password, 10);
 
   await UsersCollection.updateOne(
     { _id: user._id },
