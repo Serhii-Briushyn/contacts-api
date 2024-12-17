@@ -1,0 +1,74 @@
+description: Bad Request. The request contains invalid data or parameters.
+content:
+  application/json:
+    schema:
+      type: object
+      required:
+        - status
+        - message
+        - data
+      properties:
+        status:
+          type: integer
+          description: HTTP status code.
+          example: 400
+        message:
+          type: string
+          description: General error name.
+          example: "BadRequestError"
+        data:
+          oneOf:
+            - type: object
+              description: Validation errors in the request body.
+              required:
+                - message
+                - errors
+              properties:
+                message:
+                  type: string
+                  description: A summary of the validation error.
+                  example: "Invalid request body"
+                errors:
+                  type: array
+                  description: Detailed list of validation errors.
+                  items:
+                    type: object
+                    required:
+                      - message
+                      - path
+                      - type
+                      - context
+                    properties:
+                      message:
+                        type: string
+                        description: Description of the error.
+                        example: '"Name" is required'
+                      path:
+                        type: array
+                        description: Field causing the error.
+                        items:
+                          type: string
+                        example: ["name"]
+                      type:
+                        type: string
+                        description: Error type.
+                        example: "any.required"
+                      context:
+                        type: object
+                        description: Additional error context.
+                        properties:
+                          label:
+                            type: string
+                            example: "Name"
+                          key:
+                            type: string
+                            example: "name"
+            - type: object
+              description: Error when the contact ID is invalid.
+              required:
+                - message
+              properties:
+                message:
+                  type: string
+                  description: Description of the error.
+                  example: "Invalid contact ID format"

@@ -1,4 +1,4 @@
-import { THIRTY_DAYS } from '../constants/index.js';
+import { THIRTY_DAYS } from "../constants/index.js";
 import {
   loginOrSignupWithGoogle,
   loginUserService,
@@ -7,15 +7,15 @@ import {
   registerUserService,
   resetPasswordService,
   sendResetPasswordEmailService,
-} from '../services/auth.js';
-import { generateAuthUrl } from '../utils/googleOAuth2.js';
+} from "../services/auth.js";
+import { generateAuthUrl } from "../utils/googleOAuth2.js";
 
 const setupSession = (res, session) => {
-  res.cookie('refreshToken', session.refreshToken, {
+  res.cookie("refreshToken", session.refreshToken, {
     httpOnly: true,
     expires: new Date(Date.now() + THIRTY_DAYS),
   });
-  res.cookie('sessionId', session._id, {
+  res.cookie("sessionId", session._id, {
     httpOnly: true,
     expires: new Date(Date.now() + THIRTY_DAYS),
   });
@@ -28,7 +28,7 @@ export const registerUserController = async (req, res) => {
 
   res.status(201).json({
     status: 201,
-    message: 'Successfully registered a user!',
+    message: "Successfully registered a user!",
     data: user,
   });
 };
@@ -42,7 +42,7 @@ export const loginUserController = async (req, res) => {
 
   res.json({
     status: 200,
-    message: 'Successfully logged in an user!',
+    message: "Successfully logged in an user!",
     data: {
       accessToken: session.accessToken,
     },
@@ -61,7 +61,7 @@ export const refreshUserSessionController = async (req, res) => {
 
   res.json({
     status: 200,
-    message: 'Successfully refreshed a session!',
+    message: "Successfully refreshed a session!",
     data: {
       accessToken: session.accessToken,
     },
@@ -73,8 +73,8 @@ export const refreshUserSessionController = async (req, res) => {
 export const logoutUserController = async (req, res) => {
   await logoutUserService(req.cookies.sessionId);
 
-  res.clearCookie('sessionId');
-  res.clearCookie('refreshToken');
+  res.clearCookie("sessionId");
+  res.clearCookie("refreshToken");
 
   res.status(204).send();
 };
@@ -85,7 +85,7 @@ export const sendResetPasswordEmailController = async (req, res) => {
   await sendResetPasswordEmailService(req.body.email);
 
   res.json({
-    message: 'Reset password email was successfully sent!',
+    message: "Reset password email was successfully sent!",
     status: 200,
     data: {},
   });
@@ -97,7 +97,7 @@ export const resetPasswordController = async (req, res) => {
   await resetPasswordService(req.body);
 
   res.json({
-    message: 'Password was successfully reset!',
+    message: "Password was successfully reset!",
     status: 200,
     data: {},
   });
@@ -110,7 +110,7 @@ export const getGoogleOAuthUrlController = async (req, res) => {
 
   res.json({
     status: 200,
-    message: 'Successfully get Google OAuth url!',
+    message: "Successfully get Google OAuth url!",
     data: {
       url,
     },
@@ -125,7 +125,7 @@ export const loginWithGoogleController = async (req, res) => {
 
   res.json({
     status: 200,
-    message: 'Successfully logged in via Google OAuth!',
+    message: "Successfully logged in via Google OAuth!",
     data: {
       accessToken: session.accessToken,
     },

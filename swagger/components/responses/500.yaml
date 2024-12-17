@@ -1,0 +1,22 @@
+description: Internal Server Error. An unexpected error occurred on the server.
+content:
+  application/json:
+    schema:
+      type: object
+      required:
+        - status
+        - message
+        - error
+      properties:
+        status:
+          type: integer
+          description: HTTP status code.
+          example: 500
+        message:
+          type: string
+          description: General error name.
+          example: "Something went wrong"
+        error:
+          type: string
+          description: Details about the error message.
+          example: "Internal server error"
