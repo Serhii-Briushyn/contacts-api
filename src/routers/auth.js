@@ -1,13 +1,13 @@
-import { Router } from 'express';
-import { validateBody } from '../middlewares/validateBody.js';
+import { Router } from "express";
+import { validateBody } from "../middlewares/validateBody.js";
 import {
   loginUserSchema,
   loginWithGoogleOAuthSchema,
   registerUserSchema,
   resetPasswordSchema,
   sendResetPasswordEmailSchema,
-} from '../validation/auth.js';
-import { ctrlWrapper } from '../utils/ctrlWrapper.js';
+} from "../validation/auth.js";
+import { ctrlWrapper } from "../utils/ctrlWrapper.js";
 import {
   getGoogleOAuthUrlController,
   loginUserController,
@@ -17,42 +17,42 @@ import {
   registerUserController,
   resetPasswordController,
   sendResetPasswordEmailController,
-} from '../controllers/auth.js';
+} from "../controllers/auth.js";
 
 const router = Router();
 
 router.post(
-  '/register',
+  "/register",
   validateBody(registerUserSchema),
   ctrlWrapper(registerUserController),
 );
 
 router.post(
-  '/login',
+  "/login",
   validateBody(loginUserSchema),
   ctrlWrapper(loginUserController),
 );
 
-router.post('/refresh', ctrlWrapper(refreshUserSessionController));
+router.post("/refresh", ctrlWrapper(refreshUserSessionController));
 
-router.post('/logout', ctrlWrapper(logoutUserController));
+router.post("/logout", ctrlWrapper(logoutUserController));
 
 router.post(
-  '/send-reset-email',
+  "/send-reset-email",
   validateBody(sendResetPasswordEmailSchema),
   ctrlWrapper(sendResetPasswordEmailController),
 );
 
 router.post(
-  '/reset-pwd',
+  "/reset-pwd",
   validateBody(resetPasswordSchema),
   ctrlWrapper(resetPasswordController),
 );
 
-router.get('/get-oauth-url', ctrlWrapper(getGoogleOAuthUrlController));
+router.get("/get-oauth-url", ctrlWrapper(getGoogleOAuthUrlController));
 
 router.post(
-  '/confirm-oauth',
+  "/confirm-oauth",
   validateBody(loginWithGoogleOAuthSchema),
   ctrlWrapper(loginWithGoogleController),
 );

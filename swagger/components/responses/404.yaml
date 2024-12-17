@@ -1,0 +1,31 @@
+description: Resource not found.
+content:
+  application/json:
+    schema:
+      type: object
+      required:
+        - status
+        - message
+        - data
+      properties:
+        status:
+          type: integer
+          description: HTTP status code.
+          example: 404
+        message:
+          type: string
+          description: General error name.
+          example: "NotFoundError"
+        data:
+          type: object
+          description: Details about the error.
+          required:
+            - message
+          properties:
+            message:
+              type: string
+              description: |
+                Descriptive error message. Possible values:
+                - "Contact not found"
+                - "Route not found"
+              example: "Contact not found"
