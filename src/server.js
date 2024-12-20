@@ -21,17 +21,25 @@ export const setupServer = () => {
   app.use(cookieParser());
 
   app.use(
-    pino({
-      transport:
-        process.env.NODE_ENV === "development"
-          ? {
+    pino(
+      env("NODE_ENV") === "development"
+        ? {
+            transport: {
               target: "pino-pretty",
               options: {
                 colorize: true,
               },
-            }
-          : undefined,
-    }),
+            },
+          }
+        : {
+            transport: {
+              target: "pino-pretty",
+              options: {
+                colorize: false,
+              },
+            },
+          },
+    ),
   );
 
   app.use("/uploads", express.static(UPLOAD_DIR));
