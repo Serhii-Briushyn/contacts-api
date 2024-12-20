@@ -2,52 +2,56 @@ tags:
   - Contacts
 summary: Get all contacts
 operationId: getContacts
-description: Retrieve user contacts with pagination, sorting, and filtering.
+description: Get all user contacts.
 security:
   - bearerAuth: []
 parameters:
   - in: query
     name: page
-    description: Page number for pagination. Default is 1.
+    description: Page number for pagination.
     schema:
       type: integer
       example: 1
+      default: 1
   - in: query
     name: perPage
-    description: Number of contacts per page. Default is 10.
+    description: Number of contacts per page.
     schema:
       type: integer
       example: 10
+      default: 10
   - in: query
     name: sortBy
-    description: Sort results by a field. Default is "_id".
+    description: Sort results by a field.
     schema:
       type: string
       enum:
         [
-          _id,
-          name,
-          phoneNumber,
-          email,
-          isFavorite,
-          contactType,
-          createdAt,
-          updatedAt,
+          "_id",
+          "name",
+          "phoneNumber",
+          "email",
+          "isFavorite",
+          "contactType",
+          "createdAt",
+          "updatedAt",
         ]
       example: "name"
+      default: "_id"
   - in: query
     name: sortOrder
-    description: Sorting order. Default is "asc".
+    description: Sorting order.
     schema:
       type: string
-      enum: [asc, desc]
+      enum: ["asc", "desc"]
       example: "asc"
+      default: "asc"
   - in: query
     name: type
     description: Filter by contact type.
     schema:
       type: string
-      enum: [work, home, personal]
+      enum: ["work", "home", "personal"]
       example: "work"
   - in: query
     name: isFavorite
@@ -57,7 +61,7 @@ parameters:
       example: true
 responses:
   "200":
-    description: List of user contacts retrieved successfully with pagination and filters applied.
+    description: Successfully retrieved user contact list.
     content:
       application/json:
         schema:

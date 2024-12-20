@@ -1,0 +1,49 @@
+tags:
+  - Auth
+summary: User logout
+operationId: logoutUser
+description: Logs the user out of the system.
+security:
+  - bearerAuth: []
+parameters:
+  - in: cookie
+    name: sessionId
+    description: ID of the current user session.
+    required: true
+    schema:
+      type: string
+      example: "674c7ea11a75750f5f9b86d4"
+responses:
+  "204":
+    description: Successfully user logout. No content returned.
+  "400":
+    description: Bad request.
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              description: HTTP error status.
+              example: 400
+            message:
+              type: string
+              description: General error name.
+              example: "BadRequestError"
+            data:
+              type: object
+              description: Details about the error.
+              required:
+                - message
+              properties:
+                message:
+                  type: string
+                  description: Error message.
+                  example: "Session ID is required"
+  "500":
+    $ref: ../../../components/responses/500.yaml

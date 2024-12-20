@@ -1,0 +1,55 @@
+tags:
+  - Auth
+summary: Refresh user session
+operationId: refreshUserSession
+description: Refreshes the user session and generates a new access token.
+security:
+  - bearerAuth: []
+requestBody:
+  description: Refresh token and session ID.
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - sessionId
+          - refreshToken
+        properties:
+          sessionId:
+            type: string
+            description: ID of the current user session.
+            example: "674c7ea11a75750f5f9b86d4"
+          refreshToken:
+            type: string
+            description: Valid refresh token for session renewal.
+            example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvbiBEb2UiLCJpYXQiOjE1MTYyMzkwMjJ9.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+responses:
+  "200":
+    description: Successfully refreshed user session.
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: "Successfully refreshed a session!"
+            data:
+              type: object
+              properties:
+                accessToken:
+                  type: string
+                  description: New access token.
+                  example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzRjN2VhMTFhNzU3NTBmNWY5Yjg2ZDQiLCJpYXQiOjE2ODMxMTY0MjEsImV4cCI6MTY4MzEyMDAyMX0.3Lxq8uXKAHI7XURvLPrwt_wP1Yqluxgpqkg1P3Uztm4"
+  "401":
+    $ref: ../../../components/responses/401.yaml
+  "500":
+    $ref: ../../../components/responses/500.yaml

@@ -1,4 +1,4 @@
-description: Bad request due to invalid request body, incorrect contact ID format, or missing required session ID.
+description:  Conflict due to a resource already existing or conflicting with current state.
 content:
   application/json:
     schema:
@@ -11,11 +11,11 @@ content:
         status:
           type: integer
           description: HTTP error status.
-          example: 400
+          example: 409
         message:
           type: string
           description: General error name.
-          example: "BadRequestError"
+          example: "ConflictError"
         data:
           type: object
           description: Details about the error.
@@ -25,7 +25,4 @@ content:
             message:
               type: string
               description: Detailed error explanation.
-              oneOf:
-                - example: "Invalid request body"
-                - example: "Invalid contact ID format"
-                - example: "Session ID is required"
+              example: "Email in use"

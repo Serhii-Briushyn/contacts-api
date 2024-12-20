@@ -15,10 +15,12 @@ parameters:
       example: "674c7ea11a75750f5f9b86d4"
 responses:
   "204":
-    description: Contact deleted successfully. No content returned.
+    description: Successfully deleted contact. No content returned.
   "400":
-    $ref: ../../components/responses/400.yaml
+    $ref: ../../../components/responses/400.yaml
   "401":
-    $ref: ../../components/responses/401.yaml
+    $ref: ../../../components/responses/401.yaml
+  "404":
+    $ref: ../../../components/responses/404.yaml
   "500":
-    $ref: ../../components/responses/500.yaml
+    $ref: ../../../components/responses/500.yaml

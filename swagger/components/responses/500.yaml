@@ -1,4 +1,4 @@
-description: Internal Server Error. An unexpected error occurred on the server.
+description: Internal Server Error.
 content:
   application/json:
     schema:
@@ -10,7 +10,7 @@ content:
       properties:
         status:
           type: integer
-          description: HTTP status code.
+          description: HTTP error status.
           example: 500
         message:
           type: string
@@ -18,5 +18,5 @@ content:
           example: "Something went wrong"
         error:
           type: string
-          description: Details about the error message.
+          description: Detailed explanation of the server-side error.
           example: "Internal server error"
