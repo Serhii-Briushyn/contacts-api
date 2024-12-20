@@ -22,15 +22,9 @@ export const setupServer = () => {
 
   app.use(
     pino({
-      transport:
-        env("NODE_ENV") === "development"
-          ? {
-              target: "pino-pretty",
-              options: {
-                colorize: true,
-              },
-            }
-          : undefined,
+      transport: {
+        target: "pino-pretty",
+      },
     }),
   );
 
