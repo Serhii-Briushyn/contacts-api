@@ -23,7 +23,7 @@ export const setupServer = () => {
   app.use(
     pino({
       transport:
-        process.env.NODE_ENV === "development"
+        env("NODE_ENV") === "development"
           ? {
               target: "pino-pretty",
               options: {
