@@ -1,4 +1,4 @@
-description: Resource not found.
+description: Resource not found due to an invalid route, missing user, or missing contact in the system.
 content:
   application/json:
     schema:
@@ -10,7 +10,7 @@ content:
       properties:
         status:
           type: integer
-          description: HTTP status code.
+          description: HTTP error status.
           example: 404
         message:
           type: string
@@ -24,8 +24,8 @@ content:
           properties:
             message:
               type: string
-              description: |
-                Descriptive error message. Possible values:
-                - "Contact not found"
-                - "Route not found"
-              example: "Contact not found"
+              description: Detailed error explanation.
+              oneOf:
+                - example: "Contact not found"
+                - example: "Route not found"
+                - example: "User not found"

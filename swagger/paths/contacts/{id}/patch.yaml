@@ -2,7 +2,7 @@ tags:
   - Contacts
 summary: Update a contact
 operationId: updateContact
-description: Update a contact by its ID. Supports updating one or more fields.
+description: Update a contact by its ID.
 security:
   - bearerAuth: []
 parameters:
@@ -15,7 +15,6 @@ parameters:
       example: "674c7ea11a75750f5f9b86d4"
 requestBody:
   description: Fields to update. Provide at least one field.
-  required: true
   content:
     multipart/form-data:
       schema:
@@ -48,7 +47,7 @@ requestBody:
             description: Contact's photo file.
 responses:
   "200":
-    description: Contact updated successfully. Returns the updated contact.
+    description: Successfully updated contact.
     content:
       application/json:
         schema:
@@ -66,12 +65,12 @@ responses:
               example: "Successfully patched a contact!"
             data:
               type: object
-              $ref: ../../components/schemas/contact.yaml
+              $ref: ../../../components/schemas/contact.yaml
   "400":
-    $ref: ../../components/responses/400.yaml
+    $ref: ../../../components/responses/400.yaml
   "401":
-    $ref: ../../components/responses/401.yaml
+    $ref: ../../../components/responses/401.yaml
   "404":
-    $ref: ../../components/responses/404.yaml
+    $ref: ../../../components/responses/404.yaml
   "500":
-    $ref: ../../components/responses/500.yaml
+    $ref: ../../../components/responses/500.yaml

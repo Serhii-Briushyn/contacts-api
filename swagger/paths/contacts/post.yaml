@@ -2,7 +2,7 @@ tags:
   - Contacts
 summary: Create contact
 operationId: createContact
-description: Create a new contact with the provided details.
+description: Create a new contact.
 security:
   - bearerAuth: []
 requestBody:
@@ -42,7 +42,7 @@ requestBody:
             description: Contact's photo file.
 responses:
   "201":
-    description: Contact created successfully. Returns the new contact.
+    description: Successfully created contact.
     content:
       application/json:
         schema:

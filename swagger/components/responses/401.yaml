@@ -1,4 +1,4 @@
-description: Unauthorized access.
+description: Unauthorized access due to invalid or expired token, missing Authorization header, or session-related issues.
 content:
   application/json:
     schema:
@@ -10,7 +10,7 @@ content:
       properties:
         status:
           type: integer
-          description: HTTP status code.
+          description: HTTP error status.
           example: 401
         message:
           type: string
@@ -24,11 +24,13 @@ content:
           properties:
             message:
               type: string
-              description: |
-                Descriptive error message. Possible values:
-                - "Please provide Authorization header"
-                - "Auth header should be of type Bearer"
-                - "Session not found"
-                - "Access token expired"
-                - "User not found"
-              example: "Access token expired"
+              description: Detailed error explanation.
+              oneOf:
+                - example: "Access token expired"
+                - example: "Please provide Authorization header"
+                - example: "Auth header should be of type Bearer"
+                - example: "Session not found"
+                - example: "User not found"
+                - example: "Unauthorized"
+                - example: "Session token expired"
+                - example: "Token is invalid or expired"
