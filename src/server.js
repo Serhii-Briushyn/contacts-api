@@ -19,11 +19,18 @@ export const setupServer = () => {
   );
   app.use(cors());
   app.use(cookieParser());
+
   app.use(
     pino({
-      transport: {
-        target: "pino-pretty",
-      },
+      transport:
+        process.env.NODE_ENV === "development"
+          ? {
+              target: "pino-pretty",
+              options: {
+                colorize: true,
+              },
+            }
+          : undefined,
     }),
   );
 
