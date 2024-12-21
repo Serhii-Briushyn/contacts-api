@@ -13,13 +13,6 @@ export const createPinoLogger = () => {
             },
           },
         }
-      : {
-          transport: {
-            target: "pino-pretty",
-            options: {
-              colorize: false,
-            },
-          },
-        },
+      : {},
   );
 };
