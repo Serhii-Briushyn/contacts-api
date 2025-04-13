@@ -13,7 +13,7 @@ import { saveFileToUploadDir } from "../utils/saveFileToUploadDir.js";
 import { saveFileToCloudinary } from "../utils/saveFileToCloudinary.js";
 import { env } from "../utils/env.js";
 
-//--------------------resetPasswordController--------------------
+//--------------------getContactsController--------------------
 
 export const getContactsController = async (req, res, next) => {
   const { _id: userId } = req.user;
